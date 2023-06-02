@@ -49,13 +49,17 @@
         <a class="btn btn-link text-danger" href="{% url 'onlinecourse:course_details' course.id %}">Re-test</a>
     {% endif %}
     <div class="card-columns-vertical mt-1">
-    <h5 class="">Exam results</h5>
+    <h6>Exam results</h6>
     {% for question in course.question_set.all %}
-    <div>
-        <h6>{{question.text}}</h6>
+    <div class="card mt-1">
+        <div class="card-header"><h5>{{question.text}}</h5></div>
         <div>
-            {% for choice in question.choices_set.all %}
-                {{choice.text}}
+            {% for choice in question.choice_set.all %}
+                {% if choice.is_correct %}
+                    <p class='text-success'> Correct answer: {{choice.text}} </p>   
+                {% else %}
+                    <p>{{choice.text}}</p>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
